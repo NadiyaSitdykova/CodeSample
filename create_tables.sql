@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS hit (
     percent_identity REAL,
     score INTEGER,
     e_value REAL,
-    align_length INTEGER,
+    percent_coverage REAL,
 
     FOREIGN KEY(alignment_id) REFERENCES alignment(alignment_id)
 );

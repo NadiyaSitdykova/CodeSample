@@ -29,9 +29,11 @@ try:
                           'VALUES (?, ?)', (inserted_sequence_id, alignment.title))
                 inserted_alignment_id = c.lastrowid
                 for hsp in alignment.hsps:
-                    c.execute('INSERT INTO hit (alignment_id, percent_identity, score, e_value, align_length) '
+                    identity = hsp.identities/ hsp.align_length
+                    coverage = hsp.align_length / len(query.seq)
+                    c.execute('INSERT INTO hit (alignment_id, percent_identity, score, e_value, percent_coverage) '
                               'VALUES (?, ?, ?, ?, ?)',
-                              (inserted_alignment_id, hsp.identities, hsp.score, hsp.expect, hsp.align_length))
+                              (inserted_alignment_id, identity, hsp.score, hsp.expect, coverage))
 
     connection.commit()
 except sqlite3.Error as e:
